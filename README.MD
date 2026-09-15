@@ -2,35 +2,12 @@
 
 A searchable archive of final-year student projects — documenting the **problem, aims, approach, development challenges, mistakes, and lessons learned**.
 
-Project Vault is built as a **static website** using plain HTML, CSS, and JavaScript ES modules. There is no framework, backend, database, or build step.
+Project Vault is built as a **static website** using plain HTML, CSS, and JavaScript ES modules.
 
 All project information is stored in a single JSON file, so adding a new project requires only editing the data file — **no code changes required**.
 
 ---
 
-## ✨ Features
-
-### 🏠 Home Page
-
-* Hero section
-* Live project statistics
-* Project domain/categories
-* Featured projects
-* Recently added projects
-
-### 🔎 Project Archive
-
-* Search projects by name, student, technology, etc.
-* Filter by:
-
-  * Category
-  * Batch/year
-  * Status
-  * Technology
-* Sort projects
-* Pagination
-* Filter and search state is stored in the URL
-* Filtered pages can be shared and bookmarked
 
 ### 📄 Project Details
 
@@ -42,87 +19,17 @@ Each project has a dedicated page containing:
 * Aim
 * Objectives
 * Development approach
-* Development challenges
+* Development challenges (main one)
 * Mistakes made
-* Lessons learned
+* Lessons learned (main one)
 * Summary of growth
 * Technology stack
 * Hosted project
-* GitHub repository
+* GitHub repository (main one)
 * Contact
 * Social media
 
-### 🌙 Dark Mode
 
-* Automatically respects the user's system preference on first visit
-* Remembers the user's preference for future visits
-
-### 📱 Responsive Design
-
-* Mobile-first design
-* Works across desktop, tablet, and mobile
-* Tested down to **320px** screen width
-
-### ♿ Accessibility
-
-* Semantic HTML
-* Keyboard navigation
-* ARIA attributes where necessary
-* Respects `prefers-reduced-motion`
-
-### ✨ Animations
-
-* Subtle scroll-reveal animations
-* Staggered project card entrances
-* Automatically disabled when the user prefers reduced motion
-
----
-
-## 🛠️ Tech Stack
-
-* **HTML5**
-* **CSS3**
-* **JavaScript (ES Modules)**
-* **JSON**
-
-No:
-
-* ❌ React
-* ❌ Vue
-* ❌ Backend
-* ❌ Database
-* ❌ Build tools
-* ❌ Package manager required
-
----
-
-## 📁 Project Structure
-
-```text
-project-vault/
-│
-├── index.html
-├── projects.html
-├── project.html
-│
-├── assets/
-│   ├── css/
-│   │   ├── style.css
-│   │   ├── responsive.css
-│   │   └── ...
-│   │
-│   ├── js/
-│   │   ├── main.js
-│   │   ├── projects.js
-│   │   ├── project-detail.js
-│   │   └── data/
-│   │       └── projects.json
-│   │
-│   └── images/
-│       └── ...
-│
-└── README.md
-```
 
 > The exact structure may change as the project evolves. The important part for contributors is the `assets/js/data/projects.json` file, where project information is stored.
 
@@ -584,7 +491,7 @@ Supported values include:
 ### Email
 
 ```json
-"contact": "mailto:student@example.com"
+"contact": "example@gmail.com"
 ```
 
 ### Social Profile
@@ -653,6 +560,8 @@ You can serve it using any static server.
 ### Using Python
 
 ```bash
+npx serve .
+or 
 python3 -m http.server 8000
 ```
 
@@ -665,22 +574,6 @@ http://localhost:8000
 ### Using VS Code
 
 You can also use a static development extension such as **Live Server**.
-
----
-
-# 🌐 Deployment
-
-Project Vault can be deployed to any platform that supports static websites.
-
-Examples include:
-
-* GitHub Pages
-* Vercel
-* Netlify
-* Cloudflare Pages
-* Any traditional web server
-
-There is no server-side application or database required.
 
 ---
 
@@ -759,18 +652,12 @@ The goal is not just to showcase successful projects.
 
 ---
 
-# 📄 License
-
-Add the project's license here if the repository has one.
-
-Example:
-
-```text
-MIT License
-```
-
----
-
 ## Project Vault
 
 **A place where final-year projects become reusable knowledge for the next generation of developers.**
+
+## Builder 
+
+**Keshav Roka**
+
+GitHub: [@keshavroka55](https://github.com/keshavroka55)
