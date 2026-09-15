@@ -1,0 +1,889 @@
+{
+  "meta": {
+    "lastUpdated": "2026-09-15",
+    "batch": "2026",
+    "totalProjects": 20
+  },
+  "projects": [
+    {
+      "id": "pv-001",
+      "slug": "smartattend-face-recognition-attendance",
+      "fullName": "Aarav Sharma",
+      "studentId": "CS-2022-014",
+      "projectName": "SmartAttend — Face Recognition Attendance System",
+      "category": "AI & Machine Learning",
+      "year": 2026,
+      "status": "completed",
+      "featured": true,
+      "createdAt": "2026-05-12",
+      "techStack": ["Python", "OpenCV", "Flask", "React", "PostgreSQL", "Docker"],
+      "problemStatement": "Manual roll-call in large lecture halls wastes 5–8 minutes per class, is easy to proxy, and produces no reliable attendance analytics for faculty.",
+      "aim": "Build a contactless, anti-proxy attendance system that marks attendance in under 10 seconds per student and gives faculty real-time analytics.",
+      "objectives": [
+        "Achieve ≥95% recognition accuracy under normal classroom lighting",
+        "Mark a full 60-student class in under 2 minutes",
+        "Provide faculty with per-student attendance trends and defaulter alerts",
+        "Run fully offline on a Raspberry Pi edge device"
+      ],
+      "approach": "We validated feasibility with a Haar-cascade baseline, then moved to a fine-tuned FaceNet embedding model with cosine-similarity matching. The pipeline runs on a Raspberry Pi 4 with a Pi Camera; a Flask API writes to PostgreSQL and a React dashboard consumes the REST layer. Three pilot classes with real students drove iterations on lighting thresholds and embedding distance cut-offs.",
+      "developmentChallenges": [
+        "Recognition accuracy collapsed in backlit classrooms — fixed with CLAHE preprocessing and a second enrolment photo per student",
+        "Raspberry Pi thermal throttling during 60-student inference — solved with frame batching and active cooling",
+        "PostgreSQL connection pooling under concurrent Flask workers caused timeouts — moved to a single async worker with a queue"
+      ],
+      "mistakes": [
+        "Left dataset cleaning until week 12 — 20% of enrolment photos were unusable and had to be re-collected",
+        "Chose a heavy face model before benchmarking on the Pi, then had to rewrite the inference layer",
+        "No automated tests until the final sprint, which made refactoring terrifying"
+      ],
+      "learning": [
+        "Edge ML deployment is a thermal and memory problem as much as an accuracy problem",
+        "Data quality beats model size for face recognition",
+        "Writing tests early pays for itself the moment you refactor"
+      ],
+      "summaryOfGrowth": "I went in able to train a model in a notebook and came out able to ship one on constrained hardware. The biggest shift was learning to measure before optimising — and to treat data collection as a first-class engineering task.",
+      "links": {
+        "hosted": "https://smartattend-demo.example.com",
+        "github": "https://github.com/aaravsharma/smartattend",
+        "contact": "mailto:aarav.sharma@example.com",
+        "social": "https://www.linkedin.com/in/aaravsharma"
+      }
+    },
+    {
+      "id": "pv-002",
+      "slug": "meditrack-clinic-management",
+      "fullName": "Priya Thapa",
+      "studentId": "CS-2022-021",
+      "projectName": "MediTrack — Clinic Management SaaS",
+      "category": "Web Development",
+      "year": 2026,
+      "status": "completed",
+      "featured": true,
+      "createdAt": "2026-04-28",
+      "techStack": ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Tailwind", "Stripe"],
+      "problemStatement": "Small clinics still run appointments, prescriptions and billing on paper registers, causing lost records, double-bookings and hours of manual reconciliation.",
+      "aim": "Deliver an affordable multi-tenant clinic management platform covering appointments, patient records, prescriptions and billing in one place.",
+      "objectives": [
+        "Support multiple clinics (tenants) with isolated data",
+        "Reduce appointment booking time to under 30 seconds",
+        "Generate printable prescriptions and invoices",
+        "Work on low-end Android tablets used at reception"
+      ],
+      "approach": "We modelled the domain first (patient → visit → prescription → invoice) with Prisma, then built a Next.js App Router front end with server components for the heavy tables. Stripe handles subscription billing for clinics; role-based access separates receptionists, doctors and admins. We tested with two real clinics during a two-week pilot.",
+      "developmentChallenges": [
+        "Multi-tenancy data isolation was error-prone — solved with a tenant-scoped Prisma client wrapper",
+        "Low-end tablets choked on the original client-side data tables — moved to server-side pagination",
+        "Stripe webhook idempotency caused duplicate invoices until we added an event log table"
+      ],
+      "mistakes": [
+        "Designed the schema before talking to real receptionists — had to add walk-in appointments late",
+        "Used client-side rendering for everything at first, then refactored half the app to server components",
+        "Underestimated print styling; prescriptions looked broken on thermal printers"
+      ],
+      "learning": [
+        "Domain modelling conversations save weeks of refactoring",
+        "Server components dramatically reduce bundle size for data-heavy dashboards",
+        "Payment webhooks must be idempotent from day one"
+      ],
+      "summaryOfGrowth": "I learned to treat non-technical users as co-designers rather than test subjects. My biggest growth was in database design and in shipping a multi-tenant product responsibly.",
+      "links": {
+        "hosted": "https://meditrack-demo.example.com",
+        "github": "https://github.com/priyathapa/meditrack",
+        "contact": "mailto:priya.thapa@example.com",
+        "social": "https://www.linkedin.com/in/priyathapa"
+      }
+    },
+    {
+      "id": "pv-003",
+      "slug": "krishimitra-crop-disease-detection",
+      "fullName": "Rohan Karki",
+      "studentId": "CS-2022-007",
+      "projectName": "KrishiMitra — Crop Disease Detection",
+      "category": "AI & Machine Learning",
+      "year": 2025,
+      "status": "completed",
+      "featured": true,
+      "createdAt": "2025-11-20",
+      "techStack": ["Python", "TensorFlow", "FastAPI", "Flutter", "Firebase"],
+      "problemStatement": "Smallholder farmers lose 20–40% of yield to diseases they cannot identify in time, and agricultural extension officers are too few to visit every farm.",
+      "aim": "Give farmers an offline-capable mobile tool that identifies crop diseases from a leaf photo and recommends low-cost treatments.",
+      "objectives": [
+        "Classify 12 common diseases across 4 crops with ≥90% top-1 accuracy",
+        "Run inference on-device without internet",
+        "Provide treatment advice in local language",
+        "Keep the app under 40 MB"
+      ],
+      "approach": "We collected 18k leaf images from field visits and open datasets, then trained a MobileNetV3 model with heavy augmentation. The model was quantised to TFLite and shipped inside a Flutter app; a FastAPI service serves model updates and aggregated disease heatmaps for extension officers.",
+      "developmentChallenges": [
+        "Class imbalance — some diseases had 30× fewer samples; fixed with focal loss and targeted collection drives",
+        "Model drifted on real field photos vs. lab images — added field-image fine-tuning",
+        "On-device inference was slow on budget phones — solved with INT8 quantisation and input resizing"
+      ],
+      "mistakes": [
+        "Trained the first model on clean lab images only — accuracy dropped 25 points in the field",
+        "Shipped without a fallback for unknown diseases, so the model confidently mislabelled healthy leaves",
+        "Ignored app size until the end; had to strip several dependencies"
+      ],
+      "learning": [
+        "Field data is not optional for agricultural ML",
+        "Quantisation is a product decision, not just an optimisation",
+        "Always include an 'unknown' class and a confidence threshold"
+      ],
+      "summaryOfGrowth": "I learned that ML products live or die on data collection pipelines. I also became much better at mobile performance work and at communicating model limitations honestly.",
+      "links": {
+        "hosted": "",
+        "github": "https://github.com/rohankarki/krishimitra",
+        "contact": "mailto:rohan.karki@example.com",
+        "social": "https://www.linkedin.com/in/rohankarki"
+      }
+    },
+    {
+      "id": "pv-004",
+      "slug": "safeher-women-safety-app",
+      "fullName": "Sneha Gurung",
+      "studentId": "CS-2022-033",
+      "projectName": "SafeHer — Women Safety Companion",
+      "category": "Mobile Development",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2026-03-18",
+      "techStack": ["Flutter", "Firebase", "Google Maps", "Node.js", "Twilio"],
+      "problemStatement": "Women travelling alone at night have no fast, discreet way to alert trusted contacts or authorities when they feel unsafe.",
+      "aim": "Build a one-tap SOS app that shares live location with trusted contacts and local authorities, and works even on a locked screen.",
+      "objectives": [
+        "Trigger SOS in under 2 seconds from the lock screen",
+        "Share live location for 30 minutes after trigger",
+        "Send SMS fallback when data is unavailable",
+        "Keep battery impact under 3% per hour"
+      ],
+      "approach": "We used Flutter for a single codebase, Firebase for auth and realtime location, and a small Node.js service to fan out SMS via Twilio. A home-screen widget and a volume-button shortcut trigger SOS without unlocking. We ran a safety review with a local NGO before launch.",
+      "developmentChallenges": [
+        "Background location on iOS is heavily restricted — solved with significant-change API plus foreground service on Android",
+        "Battery drain during live tracking — batched location updates and reduced GPS accuracy after 5 minutes",
+        "SMS fallback reliability varied by carrier — added a retry queue and delivery receipts"
+      ],
+      "mistakes": [
+        "Assumed background location 'just works' on both platforms; lost two weeks to platform differences",
+        "Did not test on low-end devices until late — animations janked badly",
+        "No accessibility review until the end; the SOS button was hard to hit for users with motor impairments"
+      ],
+      "learning": [
+        "Mobile platform constraints are the real architecture",
+        "Battery and reliability are safety features, not nice-to-haves",
+        "Accessibility is a safety requirement for this kind of app"
+      ],
+      "summaryOfGrowth": "I became far more disciplined about platform-specific behaviour and about testing on real, cheap hardware. I also learned to bring domain experts (the NGO) into the design process early.",
+      "links": {
+        "hosted": "https://safeher.example.com",
+        "github": "https://github.com/snehagurung/safeher",
+        "contact": "mailto:sneha.gurung@example.com",
+        "social": "https://www.linkedin.com/in/snehagurung"
+      }
+    },
+    {
+      "id": "pv-005",
+      "slug": "busgo-realtime-bus-tracking",
+      "fullName": "Bikash Adhikari",
+      "studentId": "CS-2022-041",
+      "projectName": "BusGo — Real-time Bus Tracking",
+      "category": "IoT & Embedded",
+      "year": 2025,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2025-10-05",
+      "techStack": ["ESP32", "GPS", "MQTT", "Node.js", "React", "Redis"],
+      "problemStatement": "Commuters wait 20–40 minutes for buses with no reliable arrival information, and operators have no visibility into fleet positions.",
+      "aim": "Provide real-time bus locations and ETA predictions to commuters via a web app, and a fleet dashboard for operators.",
+      "objectives": [
+        "Track 10 buses with ≤30 second location lag",
+        "Predict ETA within ±3 minutes",
+        "Run for 12 hours on a single charge",
+        "Handle tunnel and urban-canyon GPS dropouts"
+      ],
+      "approach": "ESP32 boards with GPS modules publish positions over MQTT to a Node.js ingest service backed by Redis for live state and PostgreSQL for history. A React map shows live buses and ETAs computed from recent segment speeds. We deployed on five routes with two partner operators.",
+      "developmentChallenges": [
+        "GPS drift in dense urban areas — fused GPS with a simple dead-reckoning model using last known speed",
+        "MQTT message storms during reconnect — added exponential backoff and server-side dedupe",
+        "ETA accuracy at peak hours — switched from average speed to time-of-day segmented speeds"
+      ],
+      "mistakes": [
+        "Used a naive average-speed ETA at first; predictions were off by 10+ minutes in traffic",
+        "Ignored power management until devices died mid-route",
+        "No simulation environment; every test required a physical bus"
+      ],
+      "learning": [
+        "Real-time systems need a story for dropped messages and reconnects",
+        "Historical data is what makes ETAs believable",
+        "A simulator is worth two weeks of field testing"
+      ],
+      "summaryOfGrowth": "I learned to design for unreliable networks and to build observability into hardware projects. My biggest leap was in backend real-time architecture.",
+      "links": {
+        "hosted": "https://busgo.example.com",
+        "github": "https://github.com/bikashadhikari/busgo",
+        "contact": "mailto:bikash.adhikari@example.com",
+        "social": "https://www.linkedin.com/in/bikashadhikari"
+      }
+    },
+    {
+      "id": "pv-006",
+      "slug": "edushare-peer-learning-platform",
+      "fullName": "Anisha Rai",
+      "studentId": "CS-2022-018",
+      "projectName": "EduShare — Peer Learning Platform",
+      "category": "Web Development",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2026-02-22",
+      "techStack": ["React", "Express", "MongoDB", "Socket.io", "AWS S3"],
+      "problemStatement": "Students struggle to find peers who have already cleared the courses they are taking, and useful notes and past papers are scattered across messaging apps.",
+      "aim": "Create a structured peer-learning platform where seniors upload resources and juniors can request help from verified mentors.",
+      "objectives": [
+        "Verify seniority via college email",
+        "Support resource uploads with ratings and reviews",
+        "Enable real-time chat between mentors and mentees",
+        "Keep moderation queue under 24 hours"
+      ],
+      "approach": "We built a MERN stack app with Socket.io for chat and S3 for file storage. Verification uses OTP sent to college email domains. A lightweight moderation dashboard lets student moderators approve uploads. We seeded the platform with resources from three departments before launch.",
+      "developmentChallenges": [
+        "File upload reliability on poor connections — added chunked uploads and resumable transfers",
+        "Chat scaling during exam weeks — moved from in-memory to Redis adapter for Socket.io",
+        "Moderation backlog — added automatic duplicate detection with a hash of file contents"
+      ],
+      "mistakes": [
+        "Launched chat before moderation, which led to spam within 48 hours",
+        "Underestimated storage costs; had to add file size limits and compression",
+        "No clear onboarding for mentors; early mentor response rate was very low"
+      ],
+      "learning": [
+        "Community products need moderation and incentives from day one",
+        "Storage and bandwidth costs grow faster than expected",
+        "Onboarding is part of the product, not a support task"
+      ],
+      "summaryOfGrowth": "I learned that building a platform is 30% code and 70% community design. I became much better at thinking about incentives, moderation and trust.",
+      "links": {
+        "hosted": "https://edushare.example.com",
+        "github": "https://github.com/anisharai/edushare",
+        "contact": "mailto:anisha.rai@example.com",
+        "social": "https://www.linkedin.com/in/anisharai"
+      }
+    },
+    {
+      "id": "pv-007",
+      "slug": "chainvote-blockchain-voting",
+      "fullName": "Sujan Shrestha",
+      "studentId": "CS-2022-009",
+      "projectName": "ChainVote — Blockchain Voting System",
+      "category": "Blockchain",
+      "year": 2025,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2025-09-14",
+      "techStack": ["Solidity", "Hardhat", "Ethers.js", "React", "IPFS"],
+      "problemStatement": "Student union elections suffer from low trust, manual counting errors and no verifiable audit trail.",
+      "aim": "Build a transparent, verifiable voting system where every vote is recorded on-chain and results are auditable by anyone.",
+      "objectives": [
+        "One vote per verified student, enforced on-chain",
+        "Voter privacy via zero-knowledge commitments",
+        "Public audit trail of all ballots",
+        "Handle 2,000 voters without congestion"
+      ],
+      "approach": "We wrote a Solidity contract that stores vote commitments and uses a merkle tree for eligibility. Voter identities are verified off-chain by the election committee, and proofs are submitted to the contract. IPFS stores candidate manifestos. We ran a mock election with 300 students in a testnet environment.",
+      "developmentChallenges": [
+        "Gas costs made naive per-vote storage prohibitive — used commitments and batch merkle roots",
+        "Wallet UX was a barrier for non-crypto users — built a custodial relayer with signed messages",
+        "Testnet congestion caused failed transactions — added retry logic with dynamic gas pricing"
+      ],
+      "mistakes": [
+        "Started with an on-chain identity registry; gas costs were absurd — pivoted to merkle proofs",
+        "Assumed students understood wallets; the first usability test was a disaster",
+        "No plan for lost private keys until we added the relayer"
+      ],
+      "learning": [
+        "Blockchain is an expensive database; use it only where trust requires it",
+        "UX is the biggest barrier to Web3 adoption",
+        "Design for key loss from the beginning"
+      ],
+      "summaryOfGrowth": "I learned to question whether blockchain is actually the right tool. My biggest growth was in cryptographic design and in simplifying complex systems for real users.",
+      "links": {
+        "hosted": "https://chainvote.example.com",
+        "github": "https://github.com/sujanshrestha/chainvote",
+        "contact": "mailto:sujan.shrestha@example.com",
+        "social": "https://www.linkedin.com/in/sujanshrestha"
+      }
+    },
+    {
+      "id": "pv-008",
+      "slug": "ecoscan-waste-classification",
+      "fullName": "Kritika Poudel",
+      "studentId": "CS-2022-026",
+      "projectName": "EcoScan — Waste Classification Assistant",
+      "category": "AI & Machine Learning",
+      "year": 2026,
+      "status": "ongoing",
+      "featured": false,
+      "createdAt": "2026-07-02",
+      "techStack": ["Python", "PyTorch", "ONNX", "React Native", "FastAPI"],
+      "problemStatement": "Recycling rates stay low because people genuinely do not know which bin an item belongs to, and contamination ruins entire batches.",
+      "aim": "Build a camera-based assistant that tells users which bin an item belongs in, with local municipal rules.",
+      "objectives": [
+        "Classify 8 waste categories with ≥88% accuracy",
+        "Support municipality-specific rule overrides",
+        "Run inference offline on mid-range phones",
+        "Explain the decision in plain language"
+      ],
+      "approach": "We trained an EfficientNet-B0 on a merged dataset and exported to ONNX for React Native inference. A FastAPI service stores municipal rule sets. The app shows the predicted category, confidence and a one-line reason. Field testing is ongoing with a local recycling cooperative.",
+      "developmentChallenges": [
+        "Dataset label noise — two annotators disagreed on 12% of items; added an adjudication step",
+        "ONNX runtime size on Android — used a smaller model variant and dynamic loading",
+        "Confidence calibration — raw softmax was overconfident; applied temperature scaling"
+      ],
+      "mistakes": [
+        "Trusted a single public dataset without auditing labels",
+        "Skipped calibration until users complained the app was 'too sure'",
+        "Did not design for municipal rule updates until late"
+      ],
+      "learning": [
+        "Dataset auditing is a core engineering task",
+        "Calibrated confidence matters more than raw accuracy for user trust",
+        "Localisation is a data problem, not just a translation problem"
+      ],
+      "summaryOfGrowth": "I learned to treat uncertainty as a first-class product feature. I also got much better at ML evaluation beyond a single accuracy number.",
+      "links": {
+        "hosted": "",
+        "github": "https://github.com/kritikapoudel/ecoscan",
+        "contact": "mailto:kritika.poudel@example.com",
+        "social": "https://www.linkedin.com/in/kritikapoudel"
+      }
+    },
+    {
+      "id": "pv-009",
+      "slug": "fitpulse-iot-fitness-tracker",
+      "fullName": "Nabin Bhattarai",
+      "studentId": "CS-2022-011",
+      "projectName": "FitPulse — IoT Fitness Tracker",
+      "category": "IoT & Embedded",
+      "year": 2025,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2025-12-01",
+      "techStack": ["ESP32", "MPU6050", "MAX30102", "BLE", "Flutter", "InfluxDB"],
+      "problemStatement": "Commercial fitness trackers are expensive and lock users into proprietary clouds, with no way to access raw sensor data.",
+      "aim": "Build an open, affordable fitness tracker that streams raw sensor data and computes step, heart-rate and sleep metrics locally.",
+      "objectives": [
+        "Track steps with ≥95% accuracy vs. manual count",
+        "Measure heart rate within ±5 BPM",
+        "Last 5 days on a 200 mAh battery",
+        "Expose raw data over BLE and export to CSV"
+      ],
+      "approach": "Custom PCB with ESP32, MPU6050 IMU and MAX30102 pulse oximeter. Firmware runs step detection and heart-rate filtering on-device. A Flutter app connects over BLE, syncs to InfluxDB for long-term charts, and exports raw CSVs. We validated against a commercial tracker and manual counts.",
+      "developmentChallenges": [
+        "Motion artefacts corrupted heart-rate readings during exercise — added adaptive filtering and motion gating",
+        "BLE throughput limited raw data sync — batched packets and compressed before transfer",
+        "Battery life was 2 days initially — reduced sampling rates and added deep sleep between reads"
+      ],
+      "mistakes": [
+        "Designed the PCB before prototyping on a dev board; one revision was wasted",
+        "No calibration flow, so step counts varied by wear position",
+        "Underestimated BLE power cost during sync"
+      ],
+      "learning": [
+        "Prototype on dev boards before committing to a PCB",
+        "Signal processing is where wearable accuracy actually comes from",
+        "Power budgeting is a firmware concern, not just hardware"
+      ],
+      "summaryOfGrowth": "I became comfortable across hardware, firmware and app layers. The biggest lesson was that physical products demand iteration discipline.",
+      "links": {
+        "hosted": "",
+        "github": "https://github.com/nabinbhattarai/fitpulse",
+        "contact": "mailto:nabin.bhattarai@example.com",
+        "social": "https://www.linkedin.com/in/nabinbhattarai"
+      }
+    },
+    {
+      "id": "pv-010",
+      "slug": "sahayatri-disaster-relief-coordination",
+      "fullName": "Manisha Lama",
+      "studentId": "CS-2022-029",
+      "projectName": "Sahayatri — Disaster Relief Coordination",
+      "category": "Web Development",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2026-06-10",
+      "techStack": ["Vue 3", "Django", "PostGIS", "Celery", "MapLibre"],
+      "problemStatement": "During floods and landslides, relief requests, volunteer availability and supply stock are coordinated over scattered phone calls and spreadsheets.",
+      "aim": "Provide a single coordination platform for relief requests, volunteer matching and supply tracking during disasters.",
+      "objectives": [
+        "Ingest requests via SMS, web and phone",
+        "Match volunteers to requests by skill and distance",
+        "Track supply inventory across warehouses",
+        "Work on intermittent connectivity"
+      ],
+      "approach": "Vue 3 front end with Django REST backend, PostGIS for geospatial queries and Celery for async matching and SMS ingestion. The app uses an offline-first service worker and queues requests locally. We ran a tabletop exercise with a local disaster response NGO.",
+      "developmentChallenges": [
+        "SMS ingestion at scale — built a queue with idempotent parsing and deduplication",
+        "Offline sync conflicts — implemented last-write-wins with server reconciliation logs",
+        "Geospatial matching performance — added spatial indexes and bounding-box pre-filters"
+      ],
+      "mistakes": [
+        "Assumed reliable connectivity in disaster zones; had to retrofit offline support",
+        "No conflict resolution strategy at first, which caused duplicate volunteer assignments",
+        "Under-tested SMS parsing with regional dialects and shorthand"
+      ],
+      "learning": [
+        "Design for the worst network conditions first",
+        "Conflict resolution is a product decision, not just a technical one",
+        "Real users write SMS very differently from test data"
+      ],
+      "summaryOfGrowth": "I learned to design for degraded environments and to treat operations teams as primary users. My growth was as much in empathy as in engineering.",
+      "links": {
+        "hosted": "https://sahayatri.example.com",
+        "github": "https://github.com/manishalama/sahayatri",
+        "contact": "mailto:manisha.lama@example.com",
+        "social": "https://www.linkedin.com/in/manishalama"
+      }
+    },
+    {
+      "id": "pv-011",
+      "slug": "codementor-ai-code-review",
+      "fullName": "Dipesh Tamang",
+      "studentId": "CS-2022-036",
+      "projectName": "CodeMentor — AI Code Review Assistant",
+      "category": "AI & Machine Learning",
+      "year": 2026,
+      "status": "completed",
+      "featured": true,
+      "createdAt": "2026-05-30",
+      "techStack": ["Python", "FastAPI", "Transformers", "React", "GitHub API", "Redis"],
+      "problemStatement": "Junior developers rarely get timely, specific code review feedback, and senior reviewers are a bottleneck on every pull request.",
+      "aim": "Build a GitHub-integrated assistant that reviews pull requests and leaves actionable, line-level comments.",
+      "objectives": [
+        "Comment on security, performance and readability issues",
+        "Keep false-positive rate below 15%",
+        "Respond within 60 seconds per PR",
+        "Support Python and JavaScript initially"
+      ],
+      "approach": "We fine-tuned a code LLM on curated review comments and built a GitHub App that posts line-level comments. A FastAPI service orchestrates retrieval, static analysis (Semgrep, ESLint) and LLM review, with Redis caching for repeated diffs. Human reviewers rate each comment to improve the model over time.",
+      "developmentChallenges": [
+        "LLM hallucinations produced confidently wrong comments — grounded prompts with static-analysis findings",
+        "Large diffs exceeded context windows — chunked by file and hunk with overlap",
+        "Rate limits from GitHub — added per-installation token buckets and queueing"
+      ],
+      "mistakes": [
+        "Shipped without a feedback loop, so quality plateaued",
+        "Tried to review entire repositories instead of diffs; cost and latency exploded",
+        "Ignored false positives until users started ignoring all comments"
+      ],
+      "learning": [
+        "Grounding LLMs with deterministic tools is essential for trust",
+        "Feedback loops are what make AI products improve",
+        "Precision matters more than recall for developer tooling"
+      ],
+      "summaryOfGrowth": "I learned to combine classical static analysis with LLMs rather than treating the model as the whole solution. I also grew a lot in product thinking around trust and precision.",
+      "links": {
+        "hosted": "https://codementor.example.com",
+        "github": "https://github.com/dipeshtamang/codementor",
+        "contact": "mailto:dipesh.tamang@example.com",
+        "social": "https://www.linkedin.com/in/dipeshtamang"
+      }
+    },
+    {
+      "id": "pv-012",
+      "slug": "kalakriti-digital-art-marketplace",
+      "fullName": "Riya Maharjan",
+      "studentId": "CS-2022-023",
+      "projectName": "KalaKriti — Digital Art Marketplace",
+      "category": "Web Development",
+      "year": 2025,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2025-08-19",
+      "techStack": ["Next.js", "Sanity", "Stripe", "Cloudinary", "Vercel"],
+      "problemStatement": "Local digital artists have no trusted marketplace to sell work, and buyers worry about licensing and delivery.",
+      "aim": "Create a curated marketplace where artists sell licensed digital art with clear usage terms and instant delivery.",
+      "objectives": [
+        "Support multiple licence tiers per artwork",
+        "Deliver files instantly and securely after payment",
+        "Give artists a transparent earnings dashboard",
+        "Keep platform fee under 10%"
+      ],
+      "approach": "Next.js front end with Sanity as the CMS, Stripe Connect for artist payouts and Cloudinary for image transformation and delivery. Licence terms are stored as structured data and rendered as a plain-language summary. We onboarded 14 artists before launch.",
+      "developmentChallenges": [
+        "Stripe Connect onboarding complexity for individual artists — built a guided flow with status tracking",
+        "Secure file delivery after payment — used signed, short-lived Cloudinary URLs",
+        "Search relevance for visual art — added tags, medium and colour filters"
+      ],
+      "mistakes": [
+        "Underestimated tax and payout complexity across regions",
+        "No watermark on preview images initially, leading to free downloads",
+        "Curated too strictly at first, which limited supply"
+      ],
+      "learning": [
+        "Marketplaces are operations-heavy, not just code",
+        "Payments and compliance can dominate the roadmap",
+        "Supply-side onboarding determines marketplace health"
+      ],
+      "summaryOfGrowth": "I learned to think about both sides of a marketplace and to treat legal and payment details as product features. My growth was largely in systems thinking.",
+      "links": {
+        "hosted": "https://kalakriti.example.com",
+        "github": "https://github.com/riyamaharjan/kalakriti",
+        "contact": "mailto:riya.maharjan@example.com",
+        "social": "https://www.linkedin.com/in/riyamaharjan"
+      }
+    },
+    {
+      "id": "pv-013",
+      "slug": "parkeasy-smart-parking",
+      "fullName": "Aayush Basnet",
+      "studentId": "CS-2022-045",
+      "projectName": "ParkEasy — Smart Parking System",
+      "category": "IoT & Embedded",
+      "year": 2026,
+      "status": "ongoing",
+      "featured": false,
+      "createdAt": "2026-08-04",
+      "techStack": ["Raspberry Pi", "OpenCV", "MQTT", "Node.js", "React", "PostgreSQL"],
+      "problemStatement": "Drivers waste 15–20 minutes per trip circling for parking, and lot operators have no live occupancy data.",
+      "aim": "Detect free parking spots with cameras and expose live availability plus reservations through a web app.",
+      "objectives": [
+        "Detect occupancy with ≥95% accuracy",
+        "Update availability within 5 seconds",
+        "Support reservations with QR entry",
+        "Handle camera outages gracefully"
+      ],
+      "approach": "Raspberry Pi cameras run a lightweight OpenCV pipeline that detects vehicles per bay and publishes occupancy over MQTT. A Node.js service maintains live state, and a React app shows a map with reservation and QR entry. We deployed a pilot in one 40-bay lot on campus.",
+      "developmentChallenges": [
+        "Shadows and rain caused false positives — added temporal smoothing and a background model",
+        "Camera outages created stale state — added heartbeat monitoring and manual override",
+        "Reservation conflicts — implemented optimistic locking with server-side validation"
+      ],
+      "mistakes": [
+        "Trusted single-frame detection; accuracy was terrible in rain",
+        "No fallback when a camera went down, so bays appeared free when occupied",
+        "Built reservation UI before defining the conflict rules"
+      ],
+      "learning": [
+        "Temporal information is essential for reliable vision systems",
+        "Every sensor needs a health model and a fallback",
+        "Define business rules before building UI"
+      ],
+      "summaryOfGrowth": "I learned to treat reliability as a system property and to design fallbacks for every component. My growth was strongest in distributed systems thinking.",
+      "links": {
+        "hosted": "",
+        "github": "https://github.com/aayushbasnet/parkeasy",
+        "contact": "mailto:aayush.basnet@example.com",
+        "social": "https://www.linkedin.com/in/aayushbasnet"
+      }
+    },
+    {
+      "id": "pv-014",
+      "slug": "mentalmate-mental-health-chatbot",
+      "fullName": "Simran Chaudhary",
+      "studentId": "CS-2022-031",
+      "projectName": "MentalMate — Mental Health Chatbot",
+      "category": "AI & Machine Learning",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2026-04-11",
+      "techStack": ["Python", "Rasa", "Transformers", "React", "PostgreSQL", "Docker"],
+      "problemStatement": "Students hesitate to seek mental health support due to stigma and long wait times, and helplines are overwhelmed.",
+      "aim": "Provide a safe, private chatbot that offers coping strategies, triage and warm hand-off to human counsellors when needed.",
+      "objectives": [
+        "Detect crisis language and escalate immediately",
+        "Offer evidence-based coping exercises",
+        "Maintain strict privacy with no third-party analytics",
+        "Support English and Nepali"
+      ],
+      "approach": "We combined Rasa for dialogue flow with a transformer-based crisis classifier. All conversations are encrypted at rest and never used for training without explicit consent. Escalation triggers a warm hand-off to a counsellor queue. A clinical psychologist reviewed all flows and the safety protocol.",
+      "developmentChallenges": [
+        "Crisis detection false negatives — added a high-recall classifier plus keyword fallback",
+        "Bilingual NLU quality — collected and annotated native Nepali conversations",
+        "Privacy requirements ruled out common analytics — built a self-hosted metrics pipeline"
+      ],
+      "mistakes": [
+        "Treated the chatbot as a general assistant at first; scope creep hurt safety",
+        "Under-invested in Nepali data; early Nepali performance was poor",
+        "Did not define escalation ownership until a clinician asked who answers the alert"
+      ],
+      "learning": [
+        "Safety-critical AI needs explicit failure modes and human ownership",
+        "Privacy constraints shape architecture profoundly",
+        "Clinical review is non-negotiable for health products"
+      ],
+      "summaryOfGrowth": "I learned to design AI responsibly, with safety and privacy as primary constraints. My growth was as much in ethics and process as in engineering.",
+      "links": {
+        "hosted": "https://mentalmate.example.com",
+        "github": "https://github.com/simranchaudhary/mentalmate",
+        "contact": "mailto:simran.chaudhary@example.com",
+        "social": "https://www.linkedin.com/in/simranchaudhary"
+      }
+    },
+    {
+      "id": "pv-015",
+      "slug": "railseva-railway-reservation-redesign",
+      "fullName": "Prakash Khadka",
+      "studentId": "CS-2022-016",
+      "projectName": "RailSeva — Railway Reservation Redesign",
+      "category": "Web Development",
+      "year": 2025,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2025-07-27",
+      "techStack": ["React", "TypeScript", "Node.js", "PostgreSQL", "Redis", "Playwright"],
+      "problemStatement": "The existing railway booking flow has a high abandonment rate, poor mobile usability and confusing seat selection.",
+      "aim": "Redesign the reservation experience with a mobile-first flow, clear seat maps and transparent pricing.",
+      "objectives": [
+        "Cut booking steps from 9 to 5",
+        "Achieve WCAG 2.1 AA compliance",
+        "Support seat selection with live availability",
+        "Reduce booking time by 40% in usability tests"
+      ],
+      "approach": "We reverse-engineered the existing flow, ran usability tests with 12 participants and prototyped a new flow in Figma before building in React with TypeScript. Live seat maps are served from a Node.js API backed by Redis for fast availability reads. Playwright covers the critical booking path end-to-end.",
+      "developmentChallenges": [
+        "Live seat availability consistency — used Redis with optimistic locking",
+        "Accessibility of the seat map — built a keyboard-navigable grid with ARIA labels",
+        "Legacy API quirks — wrote an adapter layer with contract tests"
+      ],
+      "mistakes": [
+        "Built the UI before finalising the new flow; threw away two weeks of work",
+        "Ignored screen-reader testing until late; the seat map needed a full rework",
+        "No performance budget, so the first build was slow on 3G"
+      ],
+      "learning": [
+        "Prototype and test flows before writing UI code",
+        "Accessibility must be tested with real assistive tech",
+        "Performance budgets keep redesigns honest"
+      ],
+      "summaryOfGrowth": "I grew from a UI implementer into a UX-minded engineer. The biggest lesson was that usability testing is cheaper than guessing.",
+      "links": {
+        "hosted": "https://railseva.example.com",
+        "github": "https://github.com/prakashkhadka/railseva",
+        "contact": "mailto:prakash.khadka@example.com",
+        "social": "https://www.linkedin.com/in/prakashkhadka"
+      }
+    },
+    {
+      "id": "pv-016",
+      "slug": "bloodlink-donor-network",
+      "fullName": "Nisha Bhandari",
+      "studentId": "CS-2022-038",
+      "projectName": "BloodLink — Blood Donor Network",
+      "category": "Mobile Development",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2026-01-30",
+      "techStack": ["React Native", "Firebase", "Node.js", "Twilio", "Google Maps"],
+      "problemStatement": "Finding a matching blood donor in an emergency takes hours of phone calls, and donor lists are outdated.",
+      "aim": "Connect verified donors with recipients in minutes using location and blood-type matching.",
+      "objectives": [
+        "Match donors within 5 km in under 2 minutes",
+        "Verify donor eligibility and last donation date",
+        "Send push and SMS alerts to matched donors",
+        "Maintain a privacy-preserving donor directory"
+      ],
+      "approach": "React Native app with Firebase auth and Firestore for donor profiles, plus a Node.js service for matching and Twilio SMS fallback. Donors control visibility and can pause availability. We partnered with a local blood bank for verification and ran a pilot during a donation drive.",
+      "developmentChallenges": [
+        "Matching at scale with geohashing — used geohash prefixes plus distance refinement",
+        "SMS deliverability — added retries and a delivery-status dashboard",
+        "Privacy vs. reach — implemented radius-based matching without exposing exact locations"
+      ],
+      "mistakes": [
+        "Stored exact donor addresses initially; had to migrate to coarse locations for privacy",
+        "No rate limiting on alerts, so some donors got spammed",
+        "Underestimated the need for a web admin for blood bank staff"
+      ],
+      "learning": [
+        "Privacy must be designed into the data model, not bolted on",
+        "Alert fatigue is a real risk in emergency networks",
+        "Partners need their own interface, not just an app"
+      ],
+      "summaryOfGrowth": "I learned to balance urgency with respect for users' attention and privacy. My growth was strongest in data modelling and partner-facing design.",
+      "links": {
+        "hosted": "https://bloodlink.example.com",
+        "github": "https://github.com/nishabhandari/bloodlink",
+        "contact": "mailto:nisha.bhandari@example.com",
+        "social": "https://www.linkedin.com/in/nishabhandari"
+      }
+    },
+    {
+      "id": "pv-017",
+      "slug": "agripredict-yield-prediction",
+      "fullName": "Sagar Neupane",
+      "studentId": "CS-2022-005",
+      "projectName": "AgriPredict — Crop Yield Prediction",
+      "category": "Data Science",
+      "year": 2025,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2025-06-15",
+      "techStack": ["Python", "Pandas", "scikit-learn", "XGBoost", "Streamlit", "PostgreSQL"],
+      "problemStatement": "Farmers and cooperatives plan planting without data-driven yield estimates, leading to oversupply, price crashes and food waste.",
+      "aim": "Predict crop yield per district using weather, soil and historical production data, and present it in an accessible dashboard.",
+      "objectives": [
+        "Predict yield within 12% MAPE for major crops",
+        "Explain the top drivers behind each prediction",
+        "Update forecasts monthly with new weather data",
+        "Publish an open API for cooperatives"
+      ],
+      "approach": "We assembled 15 years of district-level production data, weather records and soil surveys, then trained XGBoost models per crop with time-series cross-validation. SHAP explains feature contributions. A Streamlit dashboard serves forecasts, and a FastAPI endpoint exposes them to cooperatives.",
+      "developmentChallenges": [
+        "Missing and inconsistent historical data — built an imputation and reconciliation pipeline",
+        "Leakage from future weather — enforced strict time-based splits",
+        "Model drift across districts — added per-district features and periodic retraining"
+      ],
+      "mistakes": [
+        "Initial model leaked future weather data and looked unrealistically accurate",
+        "Ignored district-level heterogeneity; one global model underperformed",
+        "Built the dashboard before validating the model with agronomists"
+      ],
+      "learning": [
+        "Time-series validation is where most data-science projects fail",
+        "Explainability builds trust with non-technical stakeholders",
+        "Domain experts catch modelling mistakes faster than metrics do"
+      ],
+      "summaryOfGrowth": "I became rigorous about validation and about communicating uncertainty. My biggest growth was learning to work with domain experts as equals.",
+      "links": {
+        "hosted": "https://agripredict.example.com",
+        "github": "https://github.com/sagarneupane/agripredict",
+        "contact": "mailto:sagar.neupane@example.com",
+        "social": "https://www.linkedin.com/in/sagarneupane"
+      }
+    },
+    {
+      "id": "pv-018",
+      "slug": "signspeak-sign-language-translator",
+      "fullName": "Pooja Dhakal",
+      "studentId": "CS-2022-027",
+      "projectName": "SignSpeak — Sign Language Translator",
+      "category": "AI & Machine Learning",
+      "year": 2026,
+      "status": "ongoing",
+      "featured": false,
+      "createdAt": "2026-08-21",
+      "techStack": ["Python", "MediaPipe", "TensorFlow", "React", "WebRTC", "FastAPI"],
+      "problemStatement": "Deaf and hard-of-hearing students face daily communication barriers because few people around them know sign language.",
+      "aim": "Translate sign language gestures to text and speech in real time using only a webcam.",
+      "objectives": [
+        "Recognise 50 signs with ≥90% accuracy",
+        "Run in real time at ≥15 FPS in the browser",
+        "Support two-handed signs",
+        "Work without specialised hardware"
+      ],
+      "approach": "MediaPipe extracts hand landmarks in the browser, and a TensorFlow model classifies sequences of landmarks. Inference runs client-side via TensorFlow.js, with a FastAPI fallback for heavier models. We are collecting a custom dataset with deaf participants to ensure signer diversity.",
+      "developmentChallenges": [
+        "Signer-dependent overfitting — added signer-independent splits and augmentation",
+        "Temporal segmentation of continuous signing — added a sliding window with a neutral-pose trigger",
+        "Browser performance on low-end laptops — reduced landmark resolution and model size"
+      ],
+      "mistakes": [
+        "Trained on a single signer initially; accuracy collapsed for new users",
+        "Ignored temporal boundaries, treating each frame independently",
+        "Did not involve deaf users until the third month"
+      ],
+      "learning": [
+        "Signer diversity is essential in sign-language ML",
+        "Temporal modelling is unavoidable for real signing",
+        "Co-design with the community is a technical advantage"
+      ],
+      "summaryOfGrowth": "I learned to build ML with, not for, the community it serves. My growth was strongest in data collection ethics and temporal modelling.",
+      "links": {
+        "hosted": "",
+        "github": "https://github.com/poojadhakal/signspeak",
+        "contact": "mailto:pooja.dhakal@example.com",
+        "social": "https://www.linkedin.com/in/poojadhakal"
+      }
+    },
+    {
+      "id": "pv-019",
+      "slug": "localloop-hyperlocal-delivery",
+      "fullName": "Kiran Rijal",
+      "studentId": "CS-2022-043",
+      "projectName": "LocalLoop — Hyperlocal Delivery Platform",
+      "category": "Web Development",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2026-03-05",
+      "techStack": ["SvelteKit", "Node.js", "PostgreSQL", "Redis", "MapLibre", "Docker"],
+      "problemStatement": "Small neighbourhood shops lose customers to large delivery apps that charge high commissions and ignore small vendors.",
+      "aim": "Build a hyperlocal delivery platform owned by neighbourhood shopkeepers with fair commissions and local rider pools.",
+      "objectives": [
+        "Onboard shops in under 10 minutes",
+        "Route riders with batched pickups",
+        "Keep commission under 8%",
+        "Support cash and digital payment"
+      ],
+      "approach": "SvelteKit storefront with Node.js backend, PostgreSQL for orders and Redis for live rider state. Routing uses a greedy batching algorithm over MapLibre. Shops get a QR-based onboarding flow; riders get a lightweight PWA. We piloted with 12 shops and 6 riders in one neighbourhood.",
+      "developmentChallenges": [
+        "Rider batching without overcomplicating — chose a simple greedy algorithm with clear rules",
+        "Cash reconciliation — built a daily settlement report and rider float tracking",
+        "Shop onboarding friction — replaced form-heavy signup with a guided QR flow"
+      ],
+      "mistakes": [
+        "Tried to build a full routing optimiser; wasted three weeks before simplifying",
+        "Ignored cash handling workflows until pilot week",
+        "Over-engineered the rider app; riders wanted speed, not features"
+      ],
+      "learning": [
+        "Simple algorithms with clear rules beat complex ones in operations",
+        "Cash is still king in many local economies",
+        "Riders are the primary users; design for one-handed use"
+      ],
+      "summaryOfGrowth": "I learned to resist over-engineering and to design for real operational constraints. My growth was strongest in product simplification.",
+      "links": {
+        "hosted": "https://localloop.example.com",
+        "github": "https://github.com/kiranrijal/localloop",
+        "contact": "mailto:kiran.rijal@example.com",
+        "social": "https://www.linkedin.com/in/kiranrijal"
+      }
+    },
+    {
+      "id": "pv-020",
+      "slug": "careercompass-guidance-platform",
+      "fullName": "Aashma Kunwar",
+      "studentId": "CS-2022-020",
+      "projectName": "CareerCompass — Career Guidance Platform",
+      "category": "Web Development",
+      "year": 2026,
+      "status": "completed",
+      "featured": false,
+      "createdAt": "2026-06-25",
+      "techStack": ["Next.js", "TypeScript", "Supabase", "Tailwind", "OpenAI API"],
+      "problemStatement": "Students in smaller cities lack access to career counsellors and rely on incomplete advice from peers and social media.",
+      "aim": "Provide structured career guidance, aptitude assessments and mentor connections to students regardless of location.",
+      "objectives": [
+        "Deliver a validated aptitude assessment",
+        "Recommend 5 career paths with reasoning",
+        "Connect students with vetted mentors",
+        "Support low-bandwidth usage"
+      ],
+      "approach": "Next.js front end with Supabase for auth and data, and an LLM layer that turns assessment results into personalised career explanations grounded in a curated career database. Mentor matching is rule-based over interests and location. We tested with 80 students across three schools.",
+      "developmentChallenges": [
+        "LLM output consistency — grounded prompts with a structured career schema and output validation",
+        "Low-bandwidth performance — optimised images and used server components to cut JS",
+        "Mentor supply — built a lightweight mentor onboarding and availability calendar"
+      ],
+      "mistakes": [
+        "Let the LLM invent career paths; had to constrain it to a curated database",
+        "Over-invested in a fancy UI before validating the assessment",
+        "No plan for mentor no-shows until students complained"
+      ],
+      "learning": [
+        "LLMs are best used to explain, not to invent facts",
+        "Assessment validity matters more than UI polish",
+        "Marketplaces need reliability guarantees on the supply side"
+      ],
+      "summaryOfGrowth": "I learned to use AI as an explanation layer over curated data. My growth was strongest in responsible AI use and in validation-driven design.",
+      "links": {
+        "hosted": "https://careercompass.example.com",
+        "github": "https://github.com/aashmakunwar/careercompass",
+        "contact": "mailto:aashma.kunwar@example.com",
+        "social": "https://www.linkedin.com/in/aashmakunwar"
+      }
+    }
+  ]
+}

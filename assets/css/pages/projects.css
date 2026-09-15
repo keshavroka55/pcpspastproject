@@ -1,0 +1,55 @@
+/* =========================================================
+   projects.css — listing layout, sidebar filters, toolbar
+   ========================================================= */
+
+.listing {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .listing { grid-template-columns: 260px 1fr; gap: var(--space-10); }
+}
+
+.listing__sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-6));
+}
+
+@media (max-width: 899px) {
+  .listing__sidebar {
+    position: static;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    background: var(--surface);
+  }
+}
+
+.filters { display: grid; gap: var(--space-6); }
+.filters__group { display: grid; gap: var(--space-3); }
+.filters__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+}
+
+.listing__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.listing__count {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.listing__sort { min-width: 200px; }
+.listing__sort .select { height: 36px; }

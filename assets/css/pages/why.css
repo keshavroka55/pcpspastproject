@@ -1,0 +1,358 @@
+/* =========================================================
+   why.css — the "why" manifesto page
+   Long-form reading layout + supporting components
+   ========================================================= */
+
+/* ---------- Hero ---------- */
+.why-hero {
+  position: relative;
+  padding-top: clamp(var(--space-16), 10vw, var(--space-24));
+  padding-bottom: clamp(var(--space-16), 8vw, var(--space-20));
+  overflow: hidden;
+}
+
+.why-hero__glow {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(900px, 130vw);
+  height: 560px;
+  background: radial-gradient(circle at center, var(--accent-soft), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.why-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.why-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-6);
+  font-family: var(--font-mono);
+}
+
+.why-hero__title {
+  font-size: clamp(2rem, 5.5vw, var(--fs-4xl));
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.04em;
+}
+
+.why-hero__title-accent {
+  background: linear-gradient(90deg, var(--accent), #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.why-hero__lead {
+  font-size: clamp(var(--fs-base), 2vw, var(--fs-lg));
+  color: var(--text-secondary);
+  max-width: 62ch;
+  margin: 0 auto var(--space-8);
+  line-height: 1.7;
+}
+
+.why-hero__actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* ---------- Prose section headers ---------- */
+.prose-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.prose-head__index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+
+.prose-head__title {
+  font-size: clamp(1.5rem, 3.5vw, var(--fs-3xl));
+  letter-spacing: -0.03em;
+}
+
+/* ---------- Prose body ---------- */
+.prose {
+  font-size: var(--fs-lg);
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+.prose p + p { margin-top: var(--space-6); }
+
+.prose strong { color: var(--text); font-weight: 600; }
+
+.prose__pull {
+  margin-top: var(--space-8) !important;
+  padding: var(--space-6) var(--space-8);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface-2);
+  font-size: var(--fs-xl);
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ---------- Gap list (what we found) ---------- */
+.gap-list {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-10);
+}
+
+.gap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.gap:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+
+.gap__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.gap__title {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.gap__text {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
+
+/* ---------- Idea list ---------- */
+.idea-list {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-10);
+  display: grid;
+  gap: var(--space-4);
+  counter-reset: idea;
+}
+
+.idea-list li {
+  position: relative;
+  padding: var(--space-5) var(--space-5) var(--space-5) var(--space-16);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  counter-increment: idea;
+}
+
+.idea-list li::before {
+  content: counter(idea, decimal-leading-zero);
+  position: absolute;
+  left: var(--space-5);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.idea-list strong {
+  display: block;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-base);
+}
+
+/* ---------- Matters grid ---------- */
+.matters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-5);
+}
+
+.matter {
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.matter:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+
+.matter__title {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+  color: var(--accent);
+}
+
+.matter__text {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
+
+/* ---------- For grid ---------- */
+.for-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-5);
+}
+
+.for-item {
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.for-item__label {
+  display: block;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+}
+
+.for-item__name {
+  display: block;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-4);
+}
+
+.for-item__text {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
+
+/* ---------- Honest note ---------- */
+.honest {
+  padding: clamp(var(--space-8), 5vw, var(--space-12));
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 100% 0%, var(--accent-soft), transparent 55%),
+    var(--surface);
+}
+
+.honest__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 1.1rem;
+  margin-bottom: var(--space-5);
+}
+
+.honest__title {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-5);
+}
+
+.honest__text {
+  color: var(--text-secondary);
+  font-size: var(--fs-base);
+  line-height: 1.75;
+  max-width: 62ch;
+}
+.honest__text + .honest__text { margin-top: var(--space-4); }
+
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 640px) {
+  .prose { font-size: var(--fs-base); }
+  .prose__pull { font-size: var(--fs-lg); padding: var(--space-5); }
+  .idea-list li { padding-left: var(--space-12); }
+  .gap { grid-template-columns: 1fr; }
+  .gap__icon { width: 36px; height: 36px; font-size: 1rem; }
+}
+
+
+/* ---------- Cost grid (section 02) ---------- */
+.cost-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-10);
+}
+
+.cost {
+  position: relative;
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.cost:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+
+.cost__num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+}
+
+.cost__title {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.cost__text {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
