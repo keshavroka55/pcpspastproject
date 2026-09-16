@@ -1,3 +1,4 @@
 slugunderstand.md/
 .vercel
 .env*
+node_modules/
