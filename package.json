@@ -1,0 +1,23 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "A searchable archive of final-year student projects — documenting the **problem, aims, approach, development challenges, mistakes, and lessons learned**.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshavroka55/pcpspastproject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keshavroka55/pcpspastproject/issues"
+  },
+  "homepage": "https://github.com/keshavroka55/pcpspastproject#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
